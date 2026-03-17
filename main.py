@@ -11,6 +11,8 @@ MUSIC_TYPES = ('flac', 'm4a', 'mp3', 'ogg', 'wav', 'wma')
 
 def main(dir: string):
     for root, dirs, files in os.walk(dir):
+        if any(f.endswith('.m3u') for f in files):
+            continue
         music_files = [
             f
             for f in files
