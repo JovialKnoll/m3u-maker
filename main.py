@@ -7,9 +7,17 @@ import sys
 import m3u
 
 
+MUSIC_TYPES = ('flac', 'm4a', 'mp3', 'ogg', 'wav', 'wma')
+
 def main(dir: string):
     for root, dirs, files in os.walk(dir):
-        m3u.make_m3u(root)
+        music_files = [
+            f
+            for f in files
+            if f.endswith(MUSIC_TYPES)
+        ]
+        if music_files:
+            m3u.make_m3u(root)
 
 
 if __name__ == '__main__':
