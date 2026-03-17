@@ -6,6 +6,7 @@ def make_m3u(dir: string):
     # todo: make and save m3u file
     # check against track number of files to ensure order is right
     print(dir)
+    print()
 
 
 if __name__ == '__main__':
