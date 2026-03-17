@@ -9,17 +9,36 @@ import m3u
 
 MUSIC_TYPES = ('flac', 'm4a', 'mp3', 'ogg', 'wav', 'wma')
 
+
+def get_music_files(files):
+    return [
+        f
+        for f in files
+        if f.endswith(MUSIC_TYPES)
+    ]
+
+
 def main(dir: string):
     for root, dirs, files in os.walk(dir):
+        # skip if .m3u already exists
         if any(f.endswith('.m3u') for f in files):
             continue
-        music_files = [
-            f
-            for f in files
-            if f.endswith(MUSIC_TYPES)
-        ]
-        if music_files:
-            m3u.make_m3u(root)
+        music_files = get_music_files(files)
+        # skip if no music files
+        if not music_files:
+            continue
+        lower_music_exists = False
+        for root_in, dirs_in, files_in in os.walk(root):
+            if root_in == root:
+                continue
+            music_files_in = get_music_files(files_in)
+            if music_files_in:
+                lower_music_exists = True
+                break
+        # skip if there are subdirectories with music files
+        if lower_music_exists:
+            continue
+        m3u.make_m3u(root)
 
 
 if __name__ == '__main__':
