@@ -4,9 +4,12 @@ import argparse
 import os
 import sys
 
+import m3u
+
 
 def main(dir: string):
-    print(dir)
+    for root, dirs, files in os.walk(dir):
+        m3u.make_m3u(root)
 
 
 if __name__ == '__main__':
