@@ -24,8 +24,8 @@ def main(dir: string):
         if any(f.endswith('.m3u') for f in files):
             continue
         music_files = get_music_files(files)
-        # skip if no music files
-        if not music_files:
+        # skip if only one or no music files
+        if len(music_files) <= 1:
             continue
         lower_music_exists = False
         for root_in, dirs_in, files_in in os.walk(root):
