@@ -30,6 +30,8 @@ def make_m3u(dir: string):
         return
     music_files.sort()
     print(dir)
+    m3u_name = os.path.basename(dir) + '.m3u'
+    print(m3u_name)
     print(music_files)
     print()
 
@@ -62,7 +64,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--single', action='store_true', help="just run on this directory")
     parser.add_argument('-d', '--dir', default='.', help="the directory to run on")
     args = parser.parse_args()
-    dir = args.dir.rstrip('"')
+    dir = args.dir.rstrip('"\\/')
     if not os.path.exists(dir):
         raise ValueError("directory passed in must exist")
     f = make_m3u if args.single else main
