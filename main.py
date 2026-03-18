@@ -58,11 +58,10 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--single', action='store_true', help='just run on this directory')
     parser.add_argument('-d', '--dir', default='.', help='the directory to run on')
     args = parser.parse_args()
-    dir = args.dir
-    if not os.path.exists(dir):
-        raise ValueError('dir passed in must exist')
+    if not os.path.exists(args.dir):
+        raise ValueError('directory passed in must exist')
     try:
-        main(dir)
+        main(args.dir)
     except KeyboardInterrupt:
         pass
     sys.exit()
