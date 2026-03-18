@@ -28,6 +28,7 @@ def make_m3u(dir: string):
     if not music_files:
         print("no music files here, exiting")
         return
+    music_files.sort()
     print(dir)
     print(music_files)
     print()
@@ -61,11 +62,12 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--single', action='store_true', help="just run on this directory")
     parser.add_argument('-d', '--dir', default='.', help="the directory to run on")
     args = parser.parse_args()
-    if not os.path.exists(args.dir):
+    dir = args.dir.rstrip('"')
+    if not os.path.exists(dir):
         raise ValueError("directory passed in must exist")
     f = make_m3u if args.single else main
     try:
-        f(args.dir)
+        f(dir)
     except KeyboardInterrupt:
         pass
     sys.exit()
