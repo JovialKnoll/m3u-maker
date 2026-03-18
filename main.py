@@ -42,7 +42,7 @@ def make_m3u(dir: string):
 def main(dir: string):
     for root, dirs, files in os.walk(dir):
         # skip if .m3u already exists
-        if any(f.endswith('.m3u') for f in files):
+        if any(f.endswith('.m3u8') for f in files):
             continue
         music_files = get_music_files(files)
         # skip if only one or no music files
