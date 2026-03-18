@@ -4,7 +4,30 @@ import argparse
 import os
 import sys
 
-import m3u
+
+MUSIC_TYPES = ('flac', 'm4a', 'mp3', 'ogg', 'wav', 'wma')
+
+
+def get_music_files(files):
+    return [
+        f
+        for f in files
+        if f.endswith(MUSIC_TYPES)
+    ]
+
+
+def make_m3u(dir: string):
+    # todo: make and save m3u file
+    # check against track number of files to ensure order is right
+    print(dir)
+    files = [
+        f
+        for f in os.listdir(dir)
+        if os.path.isfile(os.path.join(dir, f))
+    ]
+    music_files = get_music_files(files)
+    print(music_files)
+    print()
 
 
 def main(dir: string):
@@ -12,7 +35,7 @@ def main(dir: string):
         # skip if .m3u already exists
         if any(f.endswith('.m3u') for f in files):
             continue
-        music_files = m3u.get_music_files(files)
+        music_files = get_music_files(files)
         # skip if only one or no music files
         if len(music_files) <= 1:
             continue
@@ -20,21 +43,22 @@ def main(dir: string):
         for root_in, dirs_in, files_in in os.walk(root):
             if root_in == root:
                 continue
-            music_files_in = m3u.get_music_files(files_in)
+            music_files_in = get_music_files(files_in)
             if music_files_in:
                 lower_music_exists = True
                 break
         # skip if there are subdirectories with music files
         if lower_music_exists:
             continue
-        m3u.make_m3u(root)
+        make_m3u(root)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--dir')
+    parser.add_argument('-s', '--single', action='store_true', help='just run on this directory')
+    parser.add_argument('-d', '--dir', default='.', help='the directory to run on')
     args = parser.parse_args()
-    dir = args.dir or os.getcwd()
+    dir = args.dir
     if not os.path.exists(dir):
         raise ValueError('dir passed in must exist')
     try:
