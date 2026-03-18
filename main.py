@@ -19,13 +19,16 @@ def get_music_files(files):
 def make_m3u(dir: string):
     # todo: make and save m3u file
     # check against track number of files to ensure order is right
-    print(dir)
     files = [
         f
         for f in os.listdir(dir)
         if os.path.isfile(os.path.join(dir, f))
     ]
     music_files = get_music_files(files)
+    if not music_files:
+        print("no music files here, exiting")
+        return
+    print(dir)
     print(music_files)
     print()
 
@@ -55,13 +58,14 @@ def main(dir: string):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-s', '--single', action='store_true', help='just run on this directory')
-    parser.add_argument('-d', '--dir', default='.', help='the directory to run on')
+    parser.add_argument('-s', '--single', action='store_true', help="just run on this directory")
+    parser.add_argument('-d', '--dir', default='.', help="the directory to run on")
     args = parser.parse_args()
     if not os.path.exists(args.dir):
-        raise ValueError('directory passed in must exist')
+        raise ValueError("directory passed in must exist")
+    f = make_m3u if args.single else main
     try:
-        main(args.dir)
+        f(args.dir)
     except KeyboardInterrupt:
         pass
     sys.exit()
