@@ -33,7 +33,8 @@ def make_m3u(directory: string):
     print(m3u_file)
     with open(m3u_file, 'w', encoding='utf-8') as f:
         for music_file in music_files:
-            print(music_file, file=f)
+            escaped_file = music_file.replace('#', '%23')
+            print(escaped_file, file=f)
 
 
 def main(directory: string, force: bool):
