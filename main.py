@@ -29,14 +29,11 @@ def make_m3u(dir: string):
         print("no music files here, exiting")
         return
     music_files.sort()
-    print(dir)
     m3u_file = os.path.join(dir, os.path.basename(dir) + '.m3u8')
     print(m3u_file)
-    print(music_files)
     with open(m3u_file, 'w', encoding='utf-8') as f:
         for music_file in music_files:
             print(music_file, file=f)
-    print()
 
 
 def main(dir: string):
