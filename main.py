@@ -65,7 +65,7 @@ def main(dir: string):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--single', action='store_true', help="just run on this directory")
-    parser.add_argument('-d', '--dir', default='.', help="the directory to run on")
+    parser.add_argument('dir', help="the directory to run on")
     args = parser.parse_args()
     dir = args.dir.rstrip('"\\/')
     if not os.path.exists(dir):
