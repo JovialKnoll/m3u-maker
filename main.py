@@ -17,7 +17,6 @@ def get_music_files(files):
 
 
 def make_m3u(directory: string):
-    # todo: make and save m3u file
     # check against track number of files to ensure order is right
     files = [
         f
